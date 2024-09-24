@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Occupation Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .occupation-display {
+            font-size: 50px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .date {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 18px;
+        }
+
+        .selection-panel {
+            margin: 20px 0;
+        }
+
+        select, input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .monthly-occupation {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-section {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ccc;
+            text-align: left;
+            display: none;
+        }
+
+        .form-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .form-section label, .form-section input {
+            margin-bottom: 10px;
+            display: block;
+            width: 100%;
+        }
+
+        .form-section button {
+            display: block;
+            margin-top: 10px;
+        }
+
+        #loginForm {
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fleet Occupation Dashboard</h1>
+
+        <!-- Login Form -->
+        <div id="loginForm">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" placeholder="Digite sua senha">
+            <button onclick="checkPassword()">Login</button>
+        </div>
+
+        <!-- Painel para mostrar a ocupação de um dia específico -->
+        <div class="selection-panel">
+            <label for="monthSelect">Selecione o Mês: </label>
+            <select id="monthSelect">
+                <option value="Janeiro">Janeiro</option>
+                <option value="Fevereiro">Fevereiro</option>
+                <option value="Março">Março</option>
+                <option value="Abril">Abril</option>
+                <option value="Maio">Maio</option>
+                <option value="Junho">Junho</option>
+                <option value="Julho">Julho</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Setembro">Setembro</option>
+                <option value="Outubro">Outubro</option>
+                <option value="Novembro">Novembro</option>
+                <option value="Dezembro">Dezembro</option>
+            </select>
+
+            <label for="dayInput">Selecione o Dia: </label>
+            <input type="number" id="dayInput" min="1" max="31" value="1">
+
+            <button onclick="showOccupationForSelectedDate()">Exibir Ocupação</button>
+        </div>
+
+        <!-- Ocupação em tempo real -->
+        <p class="date">Data Atual: <span id="currentDate"></span></p>
+        <p class="occupation-display" id="occupationRate">Loading...</p>
+        <p class="error-message" id="errorMessage"></p>
+
+        <!-- Ocupação mensal -->
+        <div class="monthly-occupation">
+            <button onclick="showMonthlyOccupation()">Exibir Ocupação Mensal</button>
+            <p>Média do mês: <span id="monthlyRate">-</span></p>
+        </div>
+
+        <!-- Formulário para adicionar dados futuros (somente após login) -->
+        <div class="form-section" id="adminSection">
+            <h3>Adicionar Dados Diários</h3>
+
+            <label for="futureMonthInput">Selecione o Mês:</label>
+            <select id="futureMonthInput">
+                <option value="Janeiro">Janeiro</option>
+                <option value="Fevereiro">Fevereiro</option>
+                <option value="Março">Março</option>
+                <option value="Abril">Abril</option>
+                <option value="Maio">Maio</option>
+                <option value="Junho">Junho</option>
+                <option value="Julho">Julho</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Setembro">Setembro</option>
+                <option value="Outubro">Outubro</option>
+                <option value="Novembro">Novembro</option>
+                <option value="Dezembro">Dezembro</option>
+            </select>
+
+            <label for="futureDayInput">Selecione o Dia:</label>
+            <input type="number" id="futureDayInput" min="1" max="31">
+
+            <label for="occupationInput">Ocupação (%) para o dia:</label>
+            <input type="number" id="occupationInput" min="0" max="100" placeholder="Ex: 85">
+
+            <button onclick="addDailyOccupation()">Adicionar Ocupação</button>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
